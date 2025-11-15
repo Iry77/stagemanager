@@ -1,0 +1,14 @@
+{% extends 'applistagemanager/base.html' %}
+
+{% block titre %}
+Les offres
+{% endblock %}
+
+{% block main %}
+<div class="container mb-4">
+    <h2>Nos offres de stages</h2>
+    {% for offre in offres %}
+        <p>{{offre.intitule}}</p>
+    {% endfor %}
+</div>
+{% endblock %}
