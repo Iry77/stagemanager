@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.Accueil),
     path('offres/', views.Offres),
+    path('offres/<int:id>', views.Offre),
 ]

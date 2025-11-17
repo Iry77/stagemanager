@@ -1,0 +1,35 @@
+{% extends 'applistagemanager/base.html' %}
+
+{% block title %}
+    {{ offre.intitule }} - Détails
+{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            <h3>{{ offre.intitule }}</h3>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title text-primary">{{ offre.organisme }}</h5>
+            <p class="text-muted">
+                <em>Publié le : {{ offre.date_publication|date:"d/m/Y" }}</em>
+            </p>
+            <hr>
+            
+            <h6>Description du poste :</h6>
+            <p class="card-text">{{ offre.detail|linebreaks }}</p>
+            
+            <hr>
+            
+            <h6>Contact :</h6>
+            <p>
+                {{ offre.contact_nom }} {{ offre.contact_prenom }}<br>
+                <a href="mailto:{{ offre.contact_mail }}">{{ offre.contact_mail }}</a>
+            </p>
+
+            <a href="/offres/" class="btn btn-outline-secondary mt-3">Retour à la liste</a>
+            </div>
+    </div>
+</div>
+{% endblock %}

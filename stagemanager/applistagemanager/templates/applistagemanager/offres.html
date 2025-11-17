@@ -9,6 +9,7 @@ Les offres
     <h2>Nos offres de stages</h2>
     {% for offre in offres %}
         <p>{{offre.intitule}}</p>
+        <a href="/offres/{{offre.id_offre}}">Détails</a>
     {% endfor %}
 </div>
 {% endblock %}

@@ -18,3 +18,12 @@ def Offres (request):
         'applistagemanager/offres.html',
         {'offres': lesOffres},
     )
+
+def Offre (request, id):
+    uneOffre = OffreStage.objects.get(id_offre = id)
+
+    return render(
+        request,
+        'applistagemanager/offre.html',
+        {'offre' : uneOffre}
+    )
