@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from applistagemanager import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -25,3 +27,6 @@ urlpatterns = [
     path('offres/', views.Offres),
     path('offres/<int:id>', views.Offre),
 ]
+
+
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

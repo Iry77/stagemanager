@@ -1,15 +1,53 @@
 {% extends 'applistagemanager/base.html' %}
 
 {% block title %}
-Les offres
+Les offres de stage
 {% endblock %}
 
 {% block main %}
-<div class="container mb-4">
-    <h2>Nos offres de stages</h2>
+<div class="container mt-4">
+  <h2>Voici les {{ offres|length }} offres disponibles</h2>
+
+  <div class="row g-4 mt-3">
     {% for offre in offres %}
-        <p>{{offre.intitule}}</p>
-        <a href="/offres/{{offre.id_offre}}">Détails</a>
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm">
+        
+        <a href="/offres/{{ offre.id_offre }}">
+            {% if offre.image %}
+              <img
+                src="{{ offre.image.url }}"
+                class="card-img-top"
+                alt="{{ offre.intitule }}"
+                title="{{ offre.intitule }}"
+                style="height: 200px; object-fit: cover;"
+              />
+            {% else %}
+              <img 
+                src="https://via.placeholder.com/300x200?text=Pas+d'image" 
+                class="card-img-top" 
+                style="height: 200px; object-fit: cover;"
+              >
+            {% endif %}
+        </a>
+
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ offre.intitule }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ offre.organisme }}</h6>
+
+          <p class="card-text">
+            <span class="badge bg-info text-dark">{{ offre.get_etat_display }}</span>
+          </p>
+
+          <div class="mt-auto">
+            <a href="/offres/{{ offre.pk }}" class="btn btn-primary btn-sm">
+                Détails
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
     {% endfor %}
+  </div>
 </div>
 {% endblock %}
