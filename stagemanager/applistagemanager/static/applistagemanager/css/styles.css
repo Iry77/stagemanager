@@ -1,9 +1,15 @@
-/* Import des fichiers des autres components/pages */
+ /* Import des fichiers des autres components/pages */
 @import url('components/navbar.css');
+@import url('components/offres.css');
 
  /* Import des fonts */
  @import url('https://fonts.cdnfonts.com/css/general-sans');
 
 h2{
-    font-family : 'General Sans', bolder;
+    font-family : 'General Sans', sans-serif;
+    font-weight: bolder;
+}
+
+main.Site-content{
+    background-color: #fff8e3;
 }
