@@ -1,1 +1,9 @@
+/* Import des fichiers des autres components/pages */
 @import url('components/navbar.css');
+
+ /* Import des fonts */
+ @import url('https://fonts.cdnfonts.com/css/general-sans');
+
+h2{
+    font-family : 'General Sans', bolder;
+}

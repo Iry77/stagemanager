@@ -21,5 +21,6 @@ from applistagemanager import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.Accueil),
     path('offres/', views.Offres),
 ]
