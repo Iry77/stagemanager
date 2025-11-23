@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from applistagemanager.models import OffreStage, Candidature
-
+from applistagemanager.forms import OffreForm
 # Create your views here.
 
 def Accueil (request):
@@ -26,4 +26,26 @@ def Offre (request, id):
         request,
         'applistagemanager/offre.html',
         {'offre' : uneOffre}
+    )
+
+def formulaireCreationOffre(request):
+    form = OffreForm()
+
+    return render(
+        request,
+        'applistagemanager/formulaireCreationOffre.html', 
+        {'form' : form}
+    )
+
+def CreerOffre(request):
+    form = OffreForm(request.POST, request.FILES)
+
+    if form.is_valid() :
+        nomOffre = form.cleaned_data['intitule']
+        form.save()
+    
+    return render(
+        request,
+        'applistagemanager/traitementFormulaireCreationOffre.html',
+        {'nom' : nomOffre}
     )

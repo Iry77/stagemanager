@@ -15,3 +15,13 @@ class OffreForm(forms.ModelForm) :
             'contact_prenom': 'Le prénom du responsable de cet offre',
             'contact_mail' : 'Le mail du responable de cet offre'
         }
+        widgets = {
+            'organisme': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ex: Google, Thales...'}),
+            'intitule': forms.TextInput(attrs={'class': 'form-control'}),
+            'detail': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}), # rows=5 agrandit la zone de texte
+            'contact_nom': forms.TextInput(attrs={'class': 'form-control'}),
+            'contact_prenom': forms.TextInput(attrs={'class': 'form-control'}),
+            'contact_mail': forms.EmailInput(attrs={'class': 'form-control'}),
+            # Pour le logo, on utilise FileInput
+            'logo': forms.FileInput(attrs={'class': 'form-control'}),
+        }

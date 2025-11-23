@@ -26,6 +26,8 @@ urlpatterns = [
     path('', views.Accueil),
     path('offres/', views.Offres),
     path('offres/<int:id>', views.Offre),
+    path('offres/add', views.formulaireCreationOffre),
+    path('offres/create', views.CreerOffre ),
 ]
 
 
