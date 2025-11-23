@@ -22,6 +22,5 @@ class OffreForm(forms.ModelForm) :
             'contact_nom': forms.TextInput(attrs={'class': 'form-control'}),
             'contact_prenom': forms.TextInput(attrs={'class': 'form-control'}),
             'contact_mail': forms.EmailInput(attrs={'class': 'form-control'}),
-            # Pour le logo, on utilise FileInput
             'logo': forms.FileInput(attrs={'class': 'form-control'}),
         }

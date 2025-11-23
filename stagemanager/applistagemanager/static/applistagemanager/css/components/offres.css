@@ -47,7 +47,13 @@
 .card-custom:hover .card-custom-img {
     height: 100%; /* L'image descend jusqu'en bas */
     opacity: 0.3; /* Elle devient semi-transparente */
-    border-radius: 12px; /* Les coins du bas s'arrondissent aussi */
+    /* On s'assure que le haut reste rond */
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    
+    /* On force le bas à être carré (pour coller au footer des boutons) */
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 /* 3. Le contenu (Texte) */

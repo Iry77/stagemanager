@@ -3,6 +3,7 @@
 @import url('components/offres.css');
 @import url('components/accueil.css');
 @import url('components/offre.css');
+@import url('components/createOffre.css');
 
  /* Import des fonts */
  @import url('https://fonts.cdnfonts.com/css/general-sans');

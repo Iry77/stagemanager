@@ -1,0 +1,16 @@
+ /* Import des fonts */
+ @import url('https://fonts.cdnfonts.com/css/general-sans');
+
+
+.title {
+    font-family: 'General Sans', sans-serif;
+    font-weight: bold;
+}
+
+label {
+    font-family: 'General Sans', sans-serif;
+}
+
+.card-custom {
+    border-radius: 15px;
+}
