@@ -15,6 +15,7 @@ class OffreStage (models.Model) :
 
     # organisme : attribut qui permet de reconnaitre l'organisme qui publie l'offre
     organisme = models.CharField(max_length= 50)
+    logo = models.ImageField(default="logoEntreprises/shit.png" ,upload_to="logoEntreprises")
 
     # Contacts de l'entreprise
     contact_nom = models.CharField(max_length = 200)
