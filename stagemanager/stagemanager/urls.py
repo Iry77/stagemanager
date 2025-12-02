@@ -28,6 +28,9 @@ urlpatterns = [
     path('offres/<int:id>', views.Offre),
     path('offres/add', views.formulaireCreationOffre),
     path('offres/create', views.CreerOffre ),
+    path('offres/<int:id>/update', views.formulaireModificationOffre),
+    path('offres/<int:id>/updated', views.traitementFormulaireModificationOffre),
+    path('offres/<int:id>/delete', views.supprimerOffre),
 ]
 
 

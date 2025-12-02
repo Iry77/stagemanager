@@ -1,0 +1,104 @@
+{% extends 'applistagemanager/base.html' %}
+
+{% block title %}
+Modifier l'offre - StageManager
+{% endblock %}
+
+{% block main %}
+<div class="container pt-5 pb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            
+            <div class="card card-custom shadow-sm border-0">
+                
+                <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3 text-primary">
+                            <i class="bi bi-pencil-square fs-3"></i>
+                        </div>
+                        <div>
+                            <h2 class="mb-0 fw-bold title">Modifier l'offre</h2>
+                            <p class="text-muted mb-0 small">Mettez à jour les informations du stage</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    <hr class="mb-4">
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <h5 class="text-primary fw-bold mb-3"><i class="bi bi-briefcase me-2"></i>Détails du poste</h5>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="{{ form.organisme.id_for_label }}" class="form-label fw-bold small text-secondary">Organisme</label>
+                                {{ form.organisme }} <div class="text-danger small">{{ form.organisme.errors }}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.logo.id_for_label }}" class="form-label fw-bold small text-secondary">Logo (Optionnel)</label>
+                                {{ form.logo }}
+                                <div class="text-danger small">{{ form.logo.errors }}</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.intitule.id_for_label }}" class="form-label fw-bold small text-secondary">Intitulé du poste</label>
+                            {{ form.intitule }}
+                            <div class="text-danger small">{{ form.intitule.errors }}</div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.detail.id_for_label }}" class="form-label fw-bold small text-secondary">Description détaillée</label>
+                            {{ form.detail }}
+                            <div class="text-danger small">{{ form.detail.errors }}</div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h5 class="text-primary fw-bold mb-3"><i class="bi bi-person-lines-fill me-2"></i>Contact</h5>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="{{ form.contact_prenom.id_for_label }}" class="form-label fw-bold small text-secondary">Prénom</label>
+                                {{ form.contact_prenom }}
+                                <div class="text-danger small">{{ form.contact_prenom.errors }}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="{{ form.contact_nom.id_for_label }}" class="form-label fw-bold small text-secondary">Nom</label>
+                                {{ form.contact_nom }}
+                                <div class="text-danger small">{{ form.contact_nom.errors }}</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.contact_mail.id_for_label }}" class="form-label fw-bold small text-secondary">Email de contact</label>
+                            {{ form.contact_mail }}
+                            <div class="text-muted small mt-1"><i class="bi bi-info-circle me-1"></i>Cet email sera visible par les étudiants.</div>
+                            <div class="text-danger small">{{ form.contact_mail.errors }}</div>
+                        </div>
+
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
+                            <a href="/offres/" class="btn btn-outline-secondary me-md-2">Annuler</a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="bi bi-check-lg me-2"></i>Enregistrer les modifications
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-3 text-muted">
+                <small>
+                    <i class="bi bi-info-circle me-1"></i>
+                    Les modifications sont immédiates.
+                </small>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
