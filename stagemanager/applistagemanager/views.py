@@ -28,12 +28,18 @@ def Offre (request, id):
         {'offre' : uneOffre}
     )
 
-def search(request, name) :
-    lesOffres = OffreStage.objects.filter(intitule = name)
-    return render (
+def search(request):
+    query = request.GET.get('q') 
+    
+    if query:
+        lesOffres = OffreStage.objects.filter(intitule__icontains=query)
+    else:
+        lesOffres = OffreStage.objects.none()
+
+    return render(
         request,
         'applistagemanager/offres.html',
-        {'offres' : lesOffres},
+        {'offres': lesOffres},
     )
 
 def formulaireCreationOffre(request):
@@ -60,7 +66,7 @@ def CreerOffre(request):
 
 def formulaireModificationOffre(request, id):
     offre = OffreStage.objects.get(id_offre = id)
-    form = OffreForm()
+    form = OffreForm(instance=offre)
     return render(
         request,
         'applistagemanager/formulaireModificationOffre.html',
@@ -79,7 +85,7 @@ def traitementFormulaireModificationOffre(request, id) :
 
     return render(
         request,
-        'applistagemanager/traitementFormulaireModificationVoyage.html',
+        'applistagemanager/traitementFormulaireModificationOffre.html',
         {'intitule' : updatedOffre.intitule}
     )
 

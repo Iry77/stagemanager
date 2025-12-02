@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.Accueil),
     path('offres/', views.Offres),
+    path('offres/search', views.search, name = 'search'),
     path('offres/<int:id>', views.Offre),
     path('offres/add', views.formulaireCreationOffre),
     path('offres/create', views.CreerOffre ),
