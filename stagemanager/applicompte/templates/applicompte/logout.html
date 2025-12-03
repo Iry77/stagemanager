@@ -1,0 +1,44 @@
+{% extends 'applistagemanager/base.html' %}
+
+{% block title %}
+Déconnexion réussie
+{% endblock %}
+
+{% block main %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+    
+    <div class="card shadow-lg border-0 p-4" style="max-width: 500px; width: 100%;">
+        <div class="card-body text-center">
+            
+            <div class="mb-4 text-success">
+                <i class="bi bi-check-circle-fill" style="font-size: 4rem;"></i>
+            </div>
+
+            <h2 class="card-title mb-3">À bientôt !</h2>
+            <p class="card-text text-muted mb-4">
+                Vous avez été déconnecté avec succès. Que souhaitez-vous faire maintenant ?
+            </p>
+
+            <div class="d-grid gap-3">
+                <a href="{% url 'login' %}" class="btn btn-primary btn-lg">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Se reconnecter
+                </a>
+
+                <div class="text-muted small my-1">- OU -</div>
+
+                <a href="/offres/add" class="btn btn-outline-secondary">
+                    <i class="bi bi-briefcase-fill me-2"></i>Je souhaite déposer une offre
+                </a>
+            </div>
+
+            <div class="mt-4">
+                <a href="/" class="text-decoration-none text-muted small">
+                    <i class="bi bi-house-door me-1"></i>Retour à l'accueil public
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

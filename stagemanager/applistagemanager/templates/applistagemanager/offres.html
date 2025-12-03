@@ -16,7 +16,7 @@ Les offres de stage
         
         <div class="position-relative flex-grow-1 overflow-hidden rounded-top">
             
-            <div class="card-custom-img" style="background-image: url('{{ offre.image.url }}');"></div>
+            <div class="card-custom-img" style="background-image: url('{% if offre.image %}{{ offre.image.url }}{% endif %}');"></div>
             
             <a href="/offres/{{ offre.id_offre }}" class="card-link-overlay"></a>
 
@@ -29,27 +29,51 @@ Les offres de stage
                 <small>Publié le {{ offre.date_publication|date:"d F Y" }}</small>
               </div>
               
-              <div class="mt-auto">
-                  <span class="badge 
+              {% if user.is_staff or user.is_superuser %}
+                <div class="mt-auto">
+                    <span class="badge 
                     {% if offre.etat == 'validee' %} bg-success
                     {% elif offre.etat == 'refusee' %} bg-danger
                     {% elif offre.etat == 'cloturee' %} bg-secondary
                     {% else %} bg-warning text-dark {% endif %}">
                     {{ offre.get_etat_display }}
-                  </span>
-              </div>
+                    </span>
+                </div>
+              {% endif %}
             </div>
         </div>
 
         <div class="card-footer bg-white border-top-0 p-3">
             <div class="d-flex gap-2">
-                <a href="/offres/{{ offre.id_offre }}/update" class="btn btn-outline-primary btn-sm flex-grow-1">
-                    <i class="bi bi-pencil-square me-2"></i>Modifier
+
+                {% if user.is_superuser %}
+                    <a href="/offres/{{ offre.id_offre }}/update" class="btn btn-outline-primary btn-sm flex-grow-1">
+                        <i class="bi bi-pencil-square me-2"></i>Modifier
+                    </a>
+                    
+                    <a href="/offres/{{ offre.id_offre }}/delete" class="btn btn-outline-danger btn-sm" onclick="return confirm('Supprimer cette offre ?');">
+                        <i class="bi bi-trash-fill"></i>
+                    </a>
+
+                {% elif user.is_staff %}
+                <a href="/offres/{{ offre.id_offre }}/valider" 
+                    class="btn btn-success btn-sm flex-grow-1" 
+                    onclick="return confirm('Êtes-vous sûr de vouloir valider cette offre ?');">
+                    <i class="bi bi-check-circle-fill me-2"></i>Valider
                 </a>
+
+                {% elif user.is_authenticated %}
+                    <a href="/offres/{{ offre.id_offre }}/postuler" class="btn btn-primary btn-sm flex-grow-1">
+                        <i class="bi bi-send-fill me-2"></i>Postuler
+                    </a>
                 
-                <a href="/offres/{{ offre.id_offre }}/delete" class="btn btn-outline-danger btn-sm" onclick="return confirm('Supprimer cette offre ?');">
-                    <i class="bi bi-trash-fill"></i>
-                </a>
+                {% else %}
+                    <a href="/login" class="btn btn-outline-secondary btn-sm flex-grow-1">
+                        Se connecter
+                    </a>
+
+                {% endif %}
+
             </div>
         </div>
 

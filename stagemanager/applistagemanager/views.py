@@ -11,7 +11,17 @@ def Accueil (request):
 
 # Méthode pour la liste des offres
 def Offres (request):
-    lesOffres = OffreStage.objects.all()
+    if not request.user.is_authenticated :
+        return render(
+            request,
+            'applistagemanager/accueil.html'
+        )
+    if request.user.is_superuser : 
+        lesOffres = OffreStage.objects.all()
+    elif request.user.is_staff : 
+        lesOffres = OffreStage.objects.filter(etat='attente')
+    else :
+        lesOffres = OffreStage.objects.filter(etat='validee')
 
     return render (
         request, 
@@ -40,6 +50,16 @@ def search(request):
         request,
         'applistagemanager/offres.html',
         {'offres': lesOffres},
+    )
+
+def valider (request, id) :
+    offre = OffreStage.objects.get(id_offre = id)
+    offre.etat = 'validee'
+    offre.save()
+    return render(
+        request,
+        'applistagemanager/traitementValidationOffre.html',
+        {'offre' : offre}
     )
 
 def formulaireCreationOffre(request):

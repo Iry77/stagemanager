@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from applistagemanager import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -23,15 +23,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.Accueil),
-    path('offres/', views.Offres),
-    path('offres/search', views.search, name = 'search'),
-    path('offres/<int:id>', views.Offre),
-    path('offres/add', views.formulaireCreationOffre),
-    path('offres/create', views.CreerOffre ),
-    path('offres/<int:id>/update', views.formulaireModificationOffre),
-    path('offres/<int:id>/updated', views.traitementFormulaireModificationOffre),
-    path('offres/<int:id>/delete', views.supprimerOffre),
+    path('', include('applistagemanager.urls')),
+    path('', include('applicompte.urls'))
 ]
 
 
