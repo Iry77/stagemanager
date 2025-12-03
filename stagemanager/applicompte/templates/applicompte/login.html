@@ -1,0 +1,73 @@
+{% extends 'applistagemanager/base.html' %}
+
+{% block title %}
+Connexion - StageManager
+{% endblock %}
+
+{% block main %}
+<div class="container pt-5 pb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-8">
+            
+            <div class="card card-custom shadow-sm border-0">
+                
+                <div class="card-header bg-white border-0 pt-4 pb-0 px-4 text-center">
+                    <div class="d-inline-block bg-primary bg-opacity-10 p-3 rounded-circle mb-3 text-primary">
+                        <i class="bi bi-person-lock fs-1"></i>
+                    </div>
+                    <h2 class="mb-1 fw-bold title">Connexion</h2>
+                    <p class="text-muted small">Accédez à votre espace StageManager</p>
+                </div>
+
+                <div class="card-body p-4 pt-2">
+                    
+                    {% if form.errors %}
+                        <div class="alert alert-danger small p-2 text-center mb-3">
+                            <i class="bi bi-exclamation-triangle-fill me-1"></i> Identifiant ou mot de passe incorrect.
+                        </div>
+                    {% endif %}
+
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-secondary">Nom d'utilisateur</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-person"></i></span>
+                                <input type="text" name="username" class="form-control" placeholder="Votre nom d'utilisateur" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small text-secondary">Mot de passe</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-key"></i></span>
+                                <input type="password" name="password" class="form-control" placeholder="Votre mot de passe" required>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary py-2 fw-bold shadow-sm">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>Se connecter
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+                
+                <div class="card-footer bg-light border-0 py-3 text-center rounded-bottom">
+                    <small class="text-muted">Pas encore de compte ? Contactez l'administration.</small>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="/" class="text-decoration-none text-muted small">
+                    <i class="bi bi-arrow-left me-1"></i> Retour à l'accueil
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
