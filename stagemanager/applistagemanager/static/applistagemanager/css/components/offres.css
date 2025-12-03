@@ -1,0 +1,112 @@
+/* ==========================================
+   CARD CUSTOM HOVER EFFECT
+   ========================================== */
+
+ /* Import des fonts */
+ @import url('https://fonts.cdnfonts.com/css/general-sans');
+
+
+/* 1. La Carte elle-même */
+.card-custom {
+    /* On garde les propriétés d'animation du CSS original */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);
+    background-color: #fff;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden; /* Important pour que l'image ne dépasse pas */
+    box-shadow: 0px 13px 10px -7px rgba(0, 0, 0, 0.1);
+    border: none; /* On enlève la bordure Bootstrap standard pour le style */
+}
+
+/* Effet de Zoom global au survol */
+.card-custom:hover {
+    box-shadow: 0px 30px 18px -8px rgba(0, 0, 0, 0.1);
+}
+
+/* 2. L'Image (Gérée en Background) */
+.card-custom-img {
+    visibility: visible;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 235px; /* Hauteur initiale de l'image */
+    
+    /* Animation fluide */
+    transition: 0.2s all ease-out;
+    
+    /* Positionnement pour l'effet */
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+/* Au survol de la carte : l'image prend toute la place et devient transparente */
+.card-custom:hover .card-custom-img {
+    height: 100%; /* L'image descend jusqu'en bas */
+    opacity: 0.3; /* Elle devient semi-transparente */
+    /* On s'assure que le haut reste rond */
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    
+    /* On force le bas à être carré (pour coller au footer des boutons) */
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* 3. Le contenu (Texte) */
+.card-custom-info {
+    /* On décale le contenu vers le bas pour laisser la place à l'image initiale */
+    margin-top: 235px; 
+    
+    position: relative;
+    z-index: 2;
+    background-color: #fff; /* Fond blanc par défaut */
+    padding: 16px 24px 24px 24px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    
+    /* Transition pour la transparence */
+    transition: background-color 0.4s ease;
+    
+    /* Pour que le texte remplisse bien la carte */
+    height: calc(100% - 235px); 
+}
+
+/* Au survol : le fond blanc du texte disparait */
+.card-custom:hover .card-custom-info {
+    background-color: transparent;
+}
+
+/* Optionnel : Rendre toute la carte cliquable */
+.card-link-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+}
+
+/* 4. Typographie (du CSS original) */
+.card-custom .card-subtitle {
+    font-family: 'General Sans', sans-serif;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 2px;
+    font-weight: 500;
+    color: #868686;
+}
+
+.card-custom .card-title {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-family: 'General Sans', sans-serif;
+    font-weight: bolder;
+}
+
+small{
+    font-family: 'General Sans', sans-serif;
+}

@@ -1,0 +1,7 @@
+ /* Import des fonts */
+ @import url('https://fonts.cdnfonts.com/css/general-sans');
+
+ .card-title {
+    font-family: 'General Sans', sans-serif;
+    font-weight: bolder;
+ }

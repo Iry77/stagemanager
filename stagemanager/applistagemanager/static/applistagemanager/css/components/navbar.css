@@ -1,0 +1,16 @@
+ /* Import des fonts */
+ @import url('https://fonts.cdnfonts.com/css/general-sans');
+
+.navbar-custom {
+    background-color: #0e0a3b;
+}
+
+.nav-link {
+    font-family: 'General Sans', sans-serif;
+    font-weight: bold;
+    color : white
+}
+
+.nav-link:hover{
+    color : #cdedfd
+}
