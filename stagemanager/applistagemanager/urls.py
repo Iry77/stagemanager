@@ -15,6 +15,7 @@ urlpatterns = [
     path('offres/<int:id>/updated', views.traitementFormulaireModificationOffre),
     path('offres/<int:id>/delete', views.supprimerOffre),
     path('offres/<int:id>/valider', views.valider),
+    path('offres/<int:id>/candidater', views.candidater),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from applicompte.models import Etudiant
 
 ##########################################################
 # Commandes à faire après la modification de ce fichier:
@@ -52,7 +53,7 @@ class Candidature (models.Model) :
     id_candidature = models.AutoField(primary_key = True)
 
     # Les clés étrangères venant des Utilisateurs et des Offres
-    etudiant = models.ForeignKey(User, on_delete = models.CASCADE)
+    etudiant = models.ForeignKey(Etudiant, on_delete = models.CASCADE)
     offre = models.ForeignKey(OffreStage, on_delete = models.CASCADE)
 
     def __str__ (self):

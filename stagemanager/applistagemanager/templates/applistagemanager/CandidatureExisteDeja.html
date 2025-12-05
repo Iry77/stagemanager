@@ -1,0 +1,48 @@
+{% extends 'applistagemanager/base.html' %}
+
+{% block title %}
+Candidature existante - StageManager
+{% endblock %}
+
+{% block main %}
+<div class="container pt-5 pb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            
+            <div class="card shadow-sm border-0 text-center p-5">
+                <div class="card-body">
+                    
+                    <div class="mb-4">
+                        <i class="bi bi-exclamation-circle-fill text-warning" style="font-size: 4rem;"></i>
+                    </div>
+
+                    <h2 class="fw-bold mb-3">Oups !</h2>
+                    
+                    <p class="text-muted mb-4 lead">
+                        Vous avez déjà postulé pour l'offre <strong>{{ offre.intitule }}</strong>.
+                    </p>
+
+                    <div class="alert alert-warning bg-opacity-10 border-0 d-inline-block text-start" role="alert">
+                        <h6 class="alert-heading fw-bold text-warning"><i class="bi bi-info-circle-fill me-2"></i>Rappel</h6>
+                        <hr class="text-warning">
+                        <p class="mb-0 small text-dark">
+                            Il est inutile de renvoyer votre dossier. L'entreprise a déjà bien reçu votre candidature.
+                        </p>
+                    </div>
+
+                    <div class="mt-5">
+                        <a href="/offres/" class="btn btn-outline-secondary px-4 me-2">
+                            Retour aux offres
+                        </a>
+                        <a href="/" class="btn btn-primary px-4">
+                            <i class="bi bi-house-door-fill me-2"></i>Accueil
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
