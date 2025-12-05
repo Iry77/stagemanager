@@ -128,5 +128,6 @@ STATICFILES_DIRS = [
 ]
 
 # Image directory
-MEDIA_URL = "images/"
+MEDIA_URL = "/images/"
 MEDIA_ROOT = BASE_DIR / "images"
+

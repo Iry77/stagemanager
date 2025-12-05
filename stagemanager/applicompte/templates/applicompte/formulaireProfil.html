@@ -1,0 +1,95 @@
+{% extends 'applistagemanager/base.html' %}
+
+{% block title %}
+Mon Profil - StageManager
+{% endblock %}
+
+{% block main %}
+<div class="container pt-5 pb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            
+            <div class="card card-custom shadow-sm border-0">
+                
+                <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3 text-primary">
+                            <i class="bi bi-person-lines-fill fs-3"></i>
+                        </div>
+                        <div>
+                            <h2 class="mb-0 fw-bold title">Mon Profil</h2>
+                            <p class="text-muted mb-0 small">Gérez vos informations personnelles</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-4">
+                    <hr class="mb-4">
+
+                    {% if success %}
+                        <div class="alert alert-success border-0 bg-success bg-opacity-10 d-flex align-items-center mb-4">
+                            <i class="bi bi-check-circle-fill text-success fs-4 me-3"></i>
+                            <div>
+                                <h6 class="fw-bold text-success mb-0">Profil mis à jour !</h6>
+                                <small class="text-success">Vos modifications ont été enregistrées avec succès.</small>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <h5 class="text-primary fw-bold mb-3"><i class="bi bi-person-badge me-2"></i>Identité</h5>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-secondary">Prénom</label>
+                                {{ form.first_name }}
+                                <div class="text-danger small">{{ form.first_name.errors }}</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-secondary">Nom</label>
+                                {{ form.last_name }}
+                                <div class="text-danger small">{{ form.last_name.errors }}</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small text-secondary">Nom d'utilisateur</label>
+                            {{ form.username }}
+                            <div class="text-muted small mt-1"><i class="bi bi-info-circle me-1"></i>C'est l'identifiant utilisé pour vous connecter.</div>
+                            <div class="text-danger small">{{ form.username.errors }}</div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <h5 class="text-primary fw-bold mb-3"><i class="bi bi-envelope-at me-2"></i>Contact</h5>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-secondary">Adresse Email</label>
+                            {{ form.email }}
+                            <div class="text-danger small">{{ form.email.errors }}</div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
+                            <a href="/offres/" class="btn btn-outline-secondary me-md-2">Retour</a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="bi bi-save me-2"></i>Enregistrer les modifications
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-center mt-3 text-muted">
+                <small>
+                    <i class="bi bi-shield-lock me-1"></i>
+                    Vos informations restent confidentielles.
+                </small>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

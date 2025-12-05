@@ -1,0 +1,112 @@
+{% extends 'applistagemanager/base.html' %}
+
+{% block title %}
+Inscription - StageManager
+{% endblock %}
+
+{% block main %}
+<div class="container pt-5 pb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            
+            <div class="card card-custom shadow-sm border-0">
+                
+                <div class="card-header bg-white border-0 pt-4 pb-0 px-4 text-center">
+                    <div class="d-inline-block bg-primary bg-opacity-10 p-3 rounded-circle mb-3 text-primary">
+                        <i class="bi bi-person-plus-fill fs-1"></i>
+                    </div>
+                    <h2 class="mb-1 fw-bold title">Créer un compte</h2>
+                    <p class="text-muted small">Rejoignez la communauté StageManager</p>
+                </div>
+
+                <div class="card-body p-4 pt-2">
+                    
+                    <hr class="mb-4">
+
+                    {% if form.errors %}
+                        <div class="alert alert-danger small p-2 text-center mb-3">
+                            <i class="bi bi-exclamation-triangle-fill me-1"></i> Une erreur est survenue.
+                        </div>
+                    {% endif %}
+
+                    <form  action = "/inscription/" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-secondary">Prénom</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-person"></i></span>
+                                    <input type="text" name="first_name" class="form-control" placeholder="Ex: Thomas" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3 mt-md-0">
+                                <label class="form-label fw-bold small text-secondary">Nom</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-person-fill"></i></span>
+                                    <input type="text" name="last_name" class="form-control" placeholder="Ex: Petit" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-secondary">Photo de profil (Optionnel)</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-camera-fill"></i></span>
+                                <input type="file" name="image" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-secondary">Adresse Email</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope"></i></span>
+                                <input type="email" name="email" class="form-control" placeholder="thomas.petit@exemple.fr" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small text-secondary">Nom d'utilisateur</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0"><i class="bi bi-person-badge"></i></span>
+                                <input type="text" name="username" class="form-control" placeholder="Choisissez un identifiant unique" required>
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-secondary">Mot de passe</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-shield-lock"></i></span>
+                                    <input type="password" name="password" class="form-control" placeholder="********" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3 mt-md-0">
+                                <label class="form-label fw-bold small text-secondary">Confirmation</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-shield-check"></i></span>
+                                    <input type="password" name="confirm_password" class="form-control" placeholder="Répétez le mot de passe" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a href="/" class="btn btn-outline-secondary me-md-2">Annuler</a>
+                            <button type="submit" class="btn btn-primary px-4 fw-bold shadow-sm">
+                                <i class="bi bi-check-lg me-2"></i>S'inscrire
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+                
+                <div class="card-footer bg-light border-0 py-3 text-center rounded-bottom">
+                    <small class="text-muted">Vous avez déjà un compte ? <a href="/login/" class="text-primary fw-bold text-decoration-none">Connectez-vous ici</a>.</small>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

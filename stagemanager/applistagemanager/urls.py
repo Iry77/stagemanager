@@ -17,4 +17,4 @@ urlpatterns = [
     path('offres/<int:id>/valider', views.valider),
 ]
 
-urlpatterns += static(settings.MEDIA_URL, documant_root = settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
