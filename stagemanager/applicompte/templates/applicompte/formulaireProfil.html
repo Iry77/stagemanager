@@ -13,15 +13,16 @@ Mon Profil - StageManager
                 
                 <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
                     <div class="d-flex align-items-center">
-                        <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3 text-primary">
-                            <i class="bi bi-person-lines-fill fs-3"></i>
-                        </div>
-                        <div>
-                            <h2 class="mb-0 fw-bold title">Mon Profil</h2>
-                            <p class="text-muted mb-0 small">Gérez vos informations personnelles</p>
-                        </div>
-                    </div>
+                        <img src="{{ user.image.url }}" 
+                            alt="Photo de profil" 
+                            class="rounded-circle me-3 border border-2 border-white shadow-sm" 
+                            style="width: 80px; height: 80px; object-fit: cover;">
+                    <div>
+                    <h2 class="mb-0 fw-bold title">Mon Profil</h2>
+                    <p class="text-muted mb-0 small">Gérez vos informations personnelles</p>
                 </div>
+            </div>
+        </div>
 
                 <div class="card-body p-4">
                     <hr class="mb-4">
@@ -36,7 +37,7 @@ Mon Profil - StageManager
                         </div>
                     {% endif %}
 
-                    <form method="post">
+                    <form  action = "/user/updated/" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         
                         <h5 class="text-primary fw-bold mb-3"><i class="bi bi-person-badge me-2"></i>Identité</h5>
@@ -60,6 +61,14 @@ Mon Profil - StageManager
                             <div class="text-muted small mt-1"><i class="bi bi-info-circle me-1"></i>C'est l'identifiant utilisé pour vous connecter.</div>
                             <div class="text-danger small">{{ form.username.errors }}</div>
                         </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small text-secondary">Photo de profil</label>
+                            {{ form.image }}
+                            <div class="text-danger small">{{ form.image.errors }}</div>
+                        </div>
+                        
+                        <hr class="my-4">
 
                         <hr class="my-4">
 

@@ -1,6 +1,7 @@
-from django import forms # <--- Import nécessaire pour accéder à forms.TextInput
+from django import forms 
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.models import User # <--- Import correct du modèle User standard
+from django.contrib.auth.models import User
+from applicompte.models import Etudiant
 
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
@@ -17,19 +18,23 @@ class UserLoginForm(AuthenticationForm):
             'id': 'floatingPassword'
         })
 
-class UserUpdateForm(forms.ModelForm): 
+
+
+class EtudiantUpdateForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        model = Etudiant
+        fields = ['username', 'first_name', 'last_name', 'email', 'image']
         labels = {
             'username': "Nom d'utilisateur",
             'first_name': "Prénom",
             'last_name': "Nom",
-            'email': "Adresse Email"
+            'email': "Adresse Email",
+            'image': "Photo de profil"
         }
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}), 
         }
