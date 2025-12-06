@@ -57,62 +57,76 @@ def search(request):
     )
 
 def valider (request, id) :
-    offre = OffreStage.objects.get(id_offre = id)
-    offre.etat = 'validee'
-    offre.save()
-    return render(
-        request,
-        'applistagemanager/traitementValidationOffre.html',
-        {'offre' : offre}
-    )
+    if request.user.is_staff : 
+        offre = OffreStage.objects.get(id_offre = id)
+        offre.etat = 'validee'
+        offre.save()
+        return render(
+            request,
+            'applistagemanager/traitementValidationOffre.html',
+            {'offre' : offre}
+        )
+    else : 
+        return render('/offres/')        
 
 def formulaireCreationOffre(request):
-    form = OffreForm()
+    if request.user.is_superuser or not request.user.is_authenticated : 
+        form = OffreForm()
 
-    return render(
-        request,
-        'applistagemanager/formulaireCreationOffre.html', 
-        {'form' : form}
-    )
+        return render(
+            request,
+            'applistagemanager/formulaireCreationOffre.html', 
+            {'form' : form}
+        )
+    else : 
+        return render('/offres/')
 
 def CreerOffre(request):
-    form = OffreForm(request.POST, request.FILES)
+    if request.user.is_superuser or not request.user.is_authenticated : 
+        form = OffreForm(request.POST, request.FILES)
 
-    if form.is_valid() :
-        nomOffre = form.cleaned_data['intitule']
-        form.save()
-    
-    return render(
-        request,
-        'applistagemanager/traitementFormulaireCreationOffre.html',
-        {'nom' : nomOffre}
-    )
+        if form.is_valid() :
+            nomOffre = form.cleaned_data['intitule']
+            form.save()
+        
+        return render(
+            request,
+            'applistagemanager/traitementFormulaireCreationOffre.html',
+            {'nom' : nomOffre}
+        )
+    else : 
+        return render('/offres/')
 
 def formulaireModificationOffre(request, id):
-    offre = OffreStage.objects.get(id_offre = id)
-    form = OffreForm(instance=offre)
-    return render(
-        request,
-        'applistagemanager/formulaireModificationOffre.html',
-        {'form' : form, 'offre' : offre},
-    )
+    if request.user.is_superuser : 
+        offre = OffreStage.objects.get(id_offre = id)
+        form = OffreForm(instance=offre)
+        return render(
+            request,
+            'applistagemanager/formulaireModificationOffre.html',
+            {'form' : form, 'offre' : offre},
+        )
+    else : 
+        return render('/offres/')
 
 def traitementFormulaireModificationOffre(request, id) :
-    offre = OffreStage.objects.get(id_offre = id)
+    if request.user.is_superuser : 
+        offre = OffreStage.objects.get(id_offre = id)
 
-    form = OffreForm(request.POST, request.FILES, instance = offre)
+        form = OffreForm(request.POST, request.FILES, instance = offre)
 
-    if form.is_valid():
-        form.save()
-    
-    updatedOffre = OffreStage.objects.get(id_offre = id)
+        if form.is_valid():
+            form.save()
+        
+        updatedOffre = OffreStage.objects.get(id_offre = id)
 
-    return render(
-        request,
-        'applistagemanager/traitementFormulaireModificationOffre.html',
-        {'intitule' : updatedOffre.intitule}
-    )
-
+        return render(
+            request,
+            'applistagemanager/traitementFormulaireModificationOffre.html',
+            {'intitule' : updatedOffre.intitule}
+        )
+    else :
+        return redirect('/offres/')
 def supprimerOffre(request, id):
     offre = OffreStage.objects.get(id_offre = id)
     offre.delete()
@@ -130,6 +144,7 @@ def candidater(request, id) :
 
     a_candidate = Candidature.objects.filter(etudiant = etudiant, offre = offre).exists()
     
+
     if a_candidate : 
         return render(
             request,
@@ -140,6 +155,13 @@ def candidater(request, id) :
         if not (request.user.is_staff and request.user.is_superuser) :
             candidature = Candidature(etudiant = etudiant , offre = offre)
             candidature.save()
+
+    
+    # Verifier le nombres de candidatures
+    Candidatures = Candidature.objects.filter(offre = offre)
+    if len(Candidatures) >= 5 : 
+        offre.etat = "cloturee"
+        offre.save()
 
     return render(
         request,

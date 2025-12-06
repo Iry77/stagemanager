@@ -41,7 +41,7 @@ class OffreStage (models.Model) :
     ]
     # etat : attribut qui correspond à l'état de l'offre
     etat = models.CharField(max_length = 10, choices = STATUT_CHOIX, default = 'attente')
-    image = models.ImageField(default = "imagesOffres/default.jpg", upload_to = "imagesOffres")
+    image = models.ImageField(default = "imagesOffres/default.png", upload_to = "imagesOffres")
 
     def __str__ (self):
         return self.intitule    
