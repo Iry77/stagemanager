@@ -1,0 +1,152 @@
+{% extends 'applistagemanager/base.html' %}
+
+{% block title %}
+Dashboard Admin - StageManager
+{% endblock %}
+
+{% block main %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="container pt-5 pb-5">
+    
+    <div class="d-flex align-items-center mb-4">
+        <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3 text-primary">
+            <i class="bi bi-speedometer2 fs-3"></i>
+        </div>
+        <div>
+            <h2 class="mb-0 fw-bold title">Tableau de bord</h2>
+            <p class="text-muted mb-0 small">Statistiques de la plateforme</p>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted text-uppercase small fw-bold">Total Offres</h6>
+                        <h2 class="mb-0 fw-bold">{{ total_offres }}</h2>
+                    </div>
+                    <i class="bi bi-briefcase fs-1 text-primary opacity-25"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted text-uppercase small fw-bold">À Valider</h6>
+                        <h2 class="mb-0 fw-bold text-warning">{{ offres_attentes }}</h2>
+                    </div>
+                    <i class="bi bi-hourglass-split fs-1 text-warning opacity-25"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm p-3">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted text-uppercase small fw-bold">Candidatures</h6>
+                        <h2 class="mb-0 fw-bold text-success">{{ total_candidatures }}</h2>
+                    </div>
+                    <i class="bi bi-send fs-1 text-success opacity-25"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-white fw-bold border-0 pt-4 px-4">
+                    État des offres
+                </div>
+                <div class="card-body">
+                    <canvas id="statusChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-white fw-bold border-0 pt-4 px-4">
+                    Activité globale
+                </div>
+                <div class="card-body d-flex align-items-center">
+                    <canvas id="activityChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // 1. On récupère les données proprement (entre guillemets pour éviter les erreurs JS)
+        // Le |default:'0' assure qu'on a toujours un chiffre, même si la base est vide
+        const statsOffres = [
+            Number("{{ offres_attentes }}"), 
+            Number("{{ offres_validees }}"), 
+            Number("{{ offres_refusees }}"), 
+            Number("{{ offres_cloturees }}")
+        ];
+
+        const totalOffres = Number("{{ total_offres }}");
+        const totalCandidatures = Number("{{ total_candidatures }}");
+
+        // 2. Graphique Camembert (Doughnut)
+        const ctxStatus = document.getElementById('statusChart');
+        if (ctxStatus) {
+            if (totalOffres === 0) {
+                ctxStatus.parentNode.innerHTML = '<div class="text-center text-muted py-5"><i class="bi bi-inbox fs-1 d-block mb-2"></i>Aucune offre à analyser</div>';
+            } else {
+                new Chart(ctxStatus.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['En attente', 'Validées', 'Refusées', 'Clôturées'],
+                        datasets: [{
+                            data: statsOffres,
+                            backgroundColor: ['#ffc107', '#198754', '#dc3545', '#6c757d'],
+                            borderWidth: 0,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false, // Permet au graphique de bien remplir la carte
+                        plugins: {
+                            legend: { position: 'bottom' }
+                        }
+                    }
+                });
+            }
+        }
+
+        // 3. Graphique Barres (Activity)
+        const ctxActivity = document.getElementById('activityChart');
+        if (ctxActivity) {
+            new Chart(ctxActivity.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Offres publiées', 'Candidatures reçues'],
+                    datasets: [{
+                        label: 'Nombres',
+                        data: [totalOffres, totalCandidatures],
+                        backgroundColor: ['#0d6efd', '#0dcaf0'],
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }, // precision:0 pour éviter les décimales (ex: 0.5 offre)
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

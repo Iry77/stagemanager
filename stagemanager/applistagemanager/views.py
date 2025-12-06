@@ -13,7 +13,6 @@ def Accueil (request):
     else :
         return redirect('/offres/')
 
-
 def Offres (request):
     if not request.user.is_authenticated :
         return render(
@@ -67,7 +66,20 @@ def valider (request, id) :
             {'offre' : offre}
         )
     else : 
-        return render('/offres/')        
+        return render('/offres/')
+
+def refuser (request, id) : 
+    if request.user.is_staff : 
+        offre = OffreStage.objects.get(id_offre = id)
+        offre.etat = 'refusee'
+        offre.save()
+        return render(
+            request,
+            'applistagemanager/traitementValidationOffre.html',
+            {'offre' : offre}
+        )
+    else : 
+        return render('/offres/')
 
 def formulaireCreationOffre(request):
     if request.user.is_superuser or not request.user.is_authenticated : 
@@ -127,6 +139,7 @@ def traitementFormulaireModificationOffre(request, id) :
         )
     else :
         return redirect('/offres/')
+
 def supprimerOffre(request, id):
     offre = OffreStage.objects.get(id_offre = id)
     offre.delete()
@@ -167,3 +180,30 @@ def candidater(request, id) :
         request,
         'applistagemanager/traitementCandidature.html',
     )
+
+def dashboard(request) :
+    if request.user.is_superuser : 
+        total_offres = OffreStage.objects.count()
+        offres_attentes = OffreStage.objects.filter(etat = 'attente').count()
+        offres_validees = OffreStage.objects.filter(etat = 'validee').count()
+        offres_refusees = OffreStage.objects.filter(etat = 'refusee').count()
+        offres_cloturees = OffreStage.objects.filter(etat = 'cloturee').count()
+
+        total_candidatures = Candidature.objects.count()
+
+        context = {
+            'total_offres' : total_offres,
+            'offres_attentes' : offres_attentes,
+            'offres_validees' : offres_validees,
+            'offres_refusees' : offres_refusees,
+            'offres_cloturees' : offres_cloturees,
+            'total_candidatures' : total_candidatures, 
+        }
+
+        return render (
+            request,
+            'applistagemanager/dashboard.html',
+            context,
+        )
+    else : 
+        return redirect('/offres/')

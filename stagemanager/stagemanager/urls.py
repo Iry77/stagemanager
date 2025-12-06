@@ -24,7 +24,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('applistagemanager.urls')),
-    path('', include('applicompte.urls'))
+    path('', include('applicompte.urls')),
+    path('dashboard/', views.dashboard),
 ]
 
 

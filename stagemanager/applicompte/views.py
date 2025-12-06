@@ -9,7 +9,7 @@ from applicompte.forms import EtudiantUpdateForm
     
 
 
-def connexion(request):
+def connexion(request): 
     usr = request.POST['username']
     pwd = request.POST['password']
     user = authenticate(request, username = usr, password = pwd)
