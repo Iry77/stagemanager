@@ -26,44 +26,51 @@ Déposer une offre - StageManager
                 <div class="card-body p-4">
                     <hr class="mb-4">
 
-                    <form action="/offres/create" method="post" enctype="multipart/form-data">
+                    <form action="/offres/create/" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
                         <h5 class="text-primary fw-bold mb-3"><i class="bi bi-briefcase me-2"></i>Détails du poste</h5>
                         
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="{{ form.organisme.id_for_label }}" class="form-label fw-bold small text-secondary">Organisme</label>
-                                {{ form.organisme }} 
+                                <label class="form-label fw-bold small text-secondary">Organisme</label>
+                                {{ form.organisme }}
                                 <div class="text-danger small">{{ form.organisme.errors }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label for="{{ form.logo.id_for_label }}" class="form-label fw-bold small text-secondary">Logo (Optionnel)</label>
+                                <label class="form-label fw-bold small text-secondary">Logo (Optionnel)</label>
                                 {{ form.logo }}
                                 <div class="text-danger small">{{ form.logo.errors }}</div>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="{{ form.intitule.id_for_label }}" class="form-label fw-bold small text-secondary">Intitulé du poste</label>
+                            <label class="form-label fw-bold small text-secondary">Intitulé du poste</label>
                             {{ form.intitule }}
                             <div class="text-danger small">{{ form.intitule.errors }}</div>
                         </div>
 
                         <div class="mb-4">
-                            <label for="{{ form.detail.id_for_label }}" class="form-label fw-bold small text-secondary">Description détaillée</label>
+                            <label class="form-label fw-bold small text-secondary">Description détaillée</label>
                             {{ form.detail }}
                             <div class="text-danger small">{{ form.detail.errors }}</div>
                         </div>
 
                         {% if user.is_superuser %}
-                        <div class="mb-4 p-3 bg-light rounded border">
-                             <label for="{{ form.etat.id_for_label }}" class="form-label fw-bold small text-secondary">
-                                <i class="bi bi-shield-lock-fill me-1"></i>Statut de l'offre (Admin)
-                            </label>
-                             {{ form.etat }}
-                             <div class="text-danger small">{{ form.etat.errors }}</div>
-                        </div>
+                            <div class="mb-4 p-3 bg-light rounded border">
+                                <label class="form-label fw-bold small text-secondary">
+                                    <i class="bi bi-shield-lock-fill me-1"></i>Statut de l'offre (Admin)
+                                </label>
+                                {{ form.etat }}
+                            </div>
+                        {% else %}
+                            {{ form.etat.as_hidden }}
                         {% endif %}
 
                         <hr class="my-4">
@@ -72,25 +79,24 @@ Déposer une offre - StageManager
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label for="{{ form.contact_prenom.id_for_label }}" class="form-label fw-bold small text-secondary">Prénom</label>
+                                <label class="form-label fw-bold small text-secondary">Prénom</label>
                                 {{ form.contact_prenom }}
                                 <div class="text-danger small">{{ form.contact_prenom.errors }}</div>
                             </div>
                             <div class="col-md-6">
-                                <label for="{{ form.contact_nom.id_for_label }}" class="form-label fw-bold small text-secondary">Nom</label>
+                                <label class="form-label fw-bold small text-secondary">Nom</label>
                                 {{ form.contact_nom }}
                                 <div class="text-danger small">{{ form.contact_nom.errors }}</div>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="{{ form.contact_mail.id_for_label }}" class="form-label fw-bold small text-secondary">Email de contact</label>
+                            <label class="form-label fw-bold small text-secondary">Email de contact</label>
                             {{ form.contact_mail }}
-                            <div class="text-muted small mt-1"><i class="bi bi-info-circle me-1"></i>Cet email sera visible par les étudiants.</div>
                             <div class="text-danger small">{{ form.contact_mail.errors }}</div>
                         </div>
 
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
                             <a href="/" class="btn btn-outline-secondary me-md-2">Annuler</a>
                             <button type="submit" class="btn btn-primary px-4">
                                 <i class="bi bi-send-fill me-2"></i>Soumettre l'offre

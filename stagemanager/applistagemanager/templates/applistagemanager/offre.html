@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block main %}
-<div class="container pt-4">
+<div class="container pt-4 pb-5">
+    
     <div class="card mb-4 shadow-sm">
         <div class="card-body p-4">
             <div class="d-flex align-items-center mb-3">
@@ -29,20 +30,82 @@
             </div>
         </div>
     </div>
-    <div class="card mb-4 shadow-sm">        
-        <div class="card-header fw-bold p-4">
-            <h3 class = "card-title">Description du poste :</h6>
-        </div>
-        <p class="card-text">{{ offre.detail|linebreaks }}</p>
+
+    <div class="row g-4">
         
-        <hr>
-        
-        <h6>Contact :</h6>
-        <p>
-            {{ offre.contact_nom }} {{ offre.contact_prenom }}<br>
-            <a href="mailto:{{ offre.contact_mail }}">{{ offre.contact_mail }}</a>
-        </p>
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header fw-bold p-4">
+                    <h3 class="card-title">Description du poste :</h3>
+                </div>
+                <div class="card-body p-4">
+                    <div class="card-text text-secondary" style="line-height: 1.8; font-size: 1.05rem;">
+                        {{ offre.detail|linebreaks }}
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0 sticky-top" style="top: 20px; z-index: 1;">
+                <div class="card-header fw-bold p-4">
+                    <h3 class="card-title">Contact :</h3>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-4">
+                            <small class="text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">Responsable</small>
+                            <div class="d-flex align-items-center mt-2">
+                                <div class="p-2 rounded-circle me-3 text-primary">
+                                    <i class="bi bi-person-circle fs-5"></i>
+                                </div>
+                                <div class="fw-bold fs-5">
+                                    {{ offre.contact_prenom }} {{ offre.contact_nom }}
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <li>
+                            <small class="text-muted text-uppercase fw-bold" style="font-size: 0.75rem;">Email</small>
+                            <div class="d-flex align-items-center mt-2">
+                                <div class="p-2 rounded-circle me-3 text-primary">
+                                    <i class="bi bi-envelope-fill fs-5"></i>
+                                </div>
+                                <div>
+                                    <a href="mailto:{{ offre.contact_mail }}" class="text-decoration-none fw-bold text-dark">
+                                        {{ offre.contact_mail }}
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <hr class="my-4">
+
+                    <div class="d-grid gap-2">
+                        {% if user.is_superuser %}
+                            <a href="/offres/{{ offre.id_offre }}/update" class="btn btn-outline-primary">
+                                <i class="bi bi-pencil-square me-2"></i>Modifier l'offre
+                            </a>
+                        {% endif %}
+                        {% if user.is_authenticated and not user.is_staff %}
+                            {% if a_postule %}
+                                <button class="btn btn-secondary disabled" type="button">
+                                    <i class="bi bi-check-circle-fill me-2"></i>Déjà postulé
+                                </button>
+                            {% else %}
+                                <a href="/offres/{{ offre.id_offre }}/candidater" class="btn btn-primary">
+                                    <i class="bi bi-send-fill me-2"></i>Postuler maintenant
+                                </a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 {% endblock %}

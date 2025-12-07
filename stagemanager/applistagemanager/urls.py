@@ -10,11 +10,12 @@ urlpatterns = [
     path('offres/search', views.search, name = 'search'),
     path('offres/<int:id>', views.Offre),
     path('offres/add', views.formulaireCreationOffre),
-    path('offres/create', views.CreerOffre ),
+    path('offres/create/', views.CreerOffre ),
     path('offres/<int:id>/update', views.formulaireModificationOffre),
-    path('offres/<int:id>/updated', views.traitementFormulaireModificationOffre),
+    path('offres/<int:id>/updated/', views.traitementFormulaireModificationOffre),
     path('offres/<int:id>/delete', views.supprimerOffre),
     path('offres/<int:id>/valider', views.valider),
+    path('offres/<int:id>/refuser', views.refuser),
     path('offres/<int:id>/candidater', views.candidater),
 ]
 

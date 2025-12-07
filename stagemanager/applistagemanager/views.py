@@ -29,7 +29,7 @@ def Offres (request):
     return render (
         request, 
         'applistagemanager/offres.html',
-        {'offres': lesOffres},
+        {'offres': lesOffres, 'user' : request.user},
     )
 
 def Offre (request, id):
@@ -75,7 +75,7 @@ def refuser (request, id) :
         offre.save()
         return render(
             request,
-            'applistagemanager/traitementValidationOffre.html',
+            'applistagemanager/traitementRefusOffre.html',
             {'offre' : offre}
         )
     else : 
@@ -98,14 +98,21 @@ def CreerOffre(request):
         form = OffreForm(request.POST, request.FILES)
 
         if form.is_valid() :
-            nomOffre = form.cleaned_data['intitule']
+            intitule = form.cleaned_data['intitule']
             form.save()
         
-        return render(
-            request,
-            'applistagemanager/traitementFormulaireCreationOffre.html',
-            {'nom' : nomOffre}
-        )
+            return render(
+                request,
+                'applistagemanager/traitementFormulaireCreationOffre.html',
+                {'intitule' : intitule}
+            )
+        else : 
+            return render(
+                request,
+                'applistagemanager/formulaireCreationOffre.html', 
+                {'form' : form} 
+            )
+        
     else : 
         return render('/offres/')
 

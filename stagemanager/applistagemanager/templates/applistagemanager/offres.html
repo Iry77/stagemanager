@@ -6,8 +6,11 @@ Les offres de stage
 
 {% block main %}
 <div class="container pt-4">
-  <h2>Voici les {{ offres|length }} offres disponibles</h2>
-
+  {% if not user.is_staff %}
+    <h2>Voici les {{ offres|length }} offres disponibles</h2>
+  {% else %}
+    <h2>Voici les {{ offres|length }} offres à valider</h2>
+  {% endif %}
   <div class="row g-4 mt-3">
     {% for offre in offres %}
     <div class="col-12 col-md-6 col-lg-4">
@@ -60,6 +63,11 @@ Les offres de stage
                     class="btn btn-success btn-sm flex-grow-1" 
                     onclick="return confirm('Êtes-vous sûr de vouloir valider cette offre ?');">
                     <i class="bi bi-check-circle-fill me-2"></i>Valider
+                </a>
+                <a href="/offres/{{ offre.id_offre }}/refuser"
+                    class="btn btn-danger btn-sm flex-grow-1"
+                    onclick="return confirm('Êtes-vous sûr de vouloir refuser cette offre ?');">
+                    <i class="bi bi-x me-2"></i>Refuser
                 </a>
 
                 {% elif user.is_authenticated %}

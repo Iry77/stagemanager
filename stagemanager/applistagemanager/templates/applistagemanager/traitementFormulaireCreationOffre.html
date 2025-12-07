@@ -1,166 +1,49 @@
 {% extends 'applistagemanager/base.html' %}
 
 {% block title %}
-Dashboard Admin - StageManager
+Offre enregistrée !
 {% endblock %}
 
 {% block main %}
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <div class="container pt-5 pb-5">
-    
-    <div class="d-flex align-items-center mb-4">
-        <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3 text-primary">
-            <i class="bi bi-speedometer2 fs-3"></i>
-        </div>
-        <div>
-            <h2 class="mb-0 fw-bold title">Tableau de bord</h2>
-            <p class="text-muted mb-0 small">Statistiques de la plateforme</p>
-        </div>
-    </div>
-
-    <div class="row g-4 mb-5">
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm p-3">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h6 class="text-muted text-uppercase small fw-bold">Total Offres</h6>
-                        <h2 class="mb-0 fw-bold">{{ total_offres }}</h2>
-                    </div>
-                    <i class="bi bi-briefcase fs-1 text-primary opacity-25"></i>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm p-3">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h6 class="text-muted text-uppercase small fw-bold">À Valider</h6>
-                        <h2 class="mb-0 fw-bold text-warning">{{ offres_attente }}</h2>
-                    </div>
-                    <i class="bi bi-hourglass-split fs-1 text-warning opacity-25"></i>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm p-3">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h6 class="text-muted text-uppercase small fw-bold">Candidatures</h6>
-                        <h2 class="mb-0 fw-bold text-success">{{ total_candidatures }}</h2>
-                    </div>
-                    <i class="bi bi-send fs-1 text-success opacity-25"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row g-4">
-        
-        <div class="col-md-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-header bg-white fw-bold border-0 pt-4 px-4">
-                    État des offres
-                </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            
+            <div class="card shadow-sm border-0 text-center p-5">
                 <div class="card-body">
-                    <div style="height: 300px; position: relative;">
-                        <canvas id="statusChart"></canvas>
+                    
+                    <div class="mb-4">
+                        <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
                     </div>
+
+                    <h2 class="fw-bold mb-3">Offre reçue avec succès !</h2>
+                    
+                    <p class="text-muted mb-4 lead">
+                        Merci d'avoir déposé votre offre sur StageManager.
+                    </p>
+
+                    <div class="alert alert-light border d-inline-block text-start" role="alert">
+                        <h6 class="alert-heading fw-bold"><i class="bi bi-info-circle me-2"></i>Que va-t-il se passer ?</h6>
+                        <hr>
+                        <p class="mb-0 small">
+                            Votre offre est actuellement <strong>en attente de validation</strong>. 
+                            Un responsable pédagogique va la vérifier. Une fois validée, elle sera visible par tous les étudiants.
+                        </p>
+                    </div>
+
+                    <div class="mt-5">
+                        <a href="/" class="btn btn-primary px-4">
+                            <i class="bi bi-house-door-fill me-2"></i>Retour à l'accueil
+                        </a>
+                        <a href="/offres/" class="btn btn-outline-secondary px-4 ms-2">
+                            Voir les offres
+                        </a>
+                    </div>
+
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-header bg-white fw-bold border-0 pt-4 px-4">
-                    Activité globale
-                </div>
-                <div class="card-body">
-                    <div style="height: 300px; position: relative;">
-                        <canvas id="activityChart"></canvas>
-                    </div>
-                </div>
-            </div>
         </div>
-
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        
-        // --- 1. Récupération des données ---
-        // On utilise Number("{{...}}") pour éviter les erreurs de syntaxe JS dans l'éditeur
-        const dataStatus = [
-            Number("{{ offres_attente|default:'0' }}"), 
-            Number("{{ offres_validees|default:'0' }}"), 
-            Number("{{ offres_refusees|default:'0' }}"), 
-            Number("{{ offres_cloturees|default:'0' }}")
-        ];
-
-        const totalOffres = Number("{{ total_offres|default:'0' }}");
-        const totalCandidatures = Number("{{ total_candidatures|default:'0' }}");
-
-        // --- 2. Graphique Camembert (Doughnut) ---
-        const ctxStatus = document.getElementById('statusChart');
-        if (ctxStatus) {
-            // Si pas de données (total 0), on affiche un message
-            if (totalOffres === 0) {
-                ctxStatus.parentNode.innerHTML = '<div class="d-flex align-items-center justify-content-center h-100 text-muted"><p>Aucune donnée disponible</p></div>';
-            } else {
-                new Chart(ctxStatus.getContext('2d'), {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['En attente', 'Validées', 'Refusées', 'Clôturées'],
-                        datasets: [{
-                            data: dataStatus,
-                            backgroundColor: [
-                                '#ffc107', // Jaune
-                                '#198754', // Vert
-                                '#dc3545', // Rouge
-                                '#6c757d'  // Gris
-                            ],
-                            borderWidth: 0,
-                            hoverOffset: 4
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false, // Important: permet de remplir la div de 300px
-                        plugins: {
-                            legend: { position: 'bottom' }
-                        }
-                    }
-                });
-            }
-        }
-
-        // --- 3. Graphique Barres (Activity) ---
-        const ctxActivity = document.getElementById('activityChart');
-        if (ctxActivity) {
-            new Chart(ctxActivity.getContext('2d'), {
-                type: 'bar',
-                data: {
-                    labels: ['Offres publiées', 'Candidatures reçues'],
-                    datasets: [{
-                        label: 'Volume',
-                        data: [totalOffres, totalCandidatures],
-                        backgroundColor: ['#0d6efd', '#0dcaf0'],
-                        borderRadius: 5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false, // Remplit aussi la div de 300px
-                    scales: {
-                        y: { beginAtZero: true, ticks: { precision: 0 } }
-                    },
-                    plugins: {
-                        legend: { display: false }
-                    }
-                }
-            });
-        }
-    });
-</script>
 {% endblock %}

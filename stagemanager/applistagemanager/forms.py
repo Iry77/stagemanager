@@ -26,3 +26,7 @@ class OffreForm(forms.ModelForm) :
             'logo': forms.FileInput(attrs={'class': 'form-control'}),
             'etat': forms.Select(attrs={'class': 'form-select'}),
         }
+
+        def __init__(self, *args, **kwargs):
+            super(OffreForm, self).__init__(*args, **kwargs)
+            self.fields['logo'].required = False
